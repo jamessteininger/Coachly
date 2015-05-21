@@ -5,7 +5,6 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:user_id) %></th>
       <th><%= model_class.human_attribute_name(:sender_id) %></th>
       <th><%= model_class.human_attribute_name(:prompt) %></th>
       <th><%= model_class.human_attribute_name(:b_read) %></th>
@@ -13,10 +12,9 @@
     </tr>
   </thead>
   <tbody>
-    <% @feedback_requests.each do |feedback_request| %>
+    <% current_user.feedback_requests.each do |feedback_request| %>
     <tr>
-      <td><%= feedback_request.user_id %></td>
-      <td><%= feedback_request.sender_id %></td>
+      <td><%= feedback_request.sender.email %></td>
       <td><%= feedback_request.prompt %></td>
       <td><%= feedback_request.b_read %></td>
       <td>
