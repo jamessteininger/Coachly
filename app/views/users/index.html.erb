@@ -1,0 +1,54 @@
+<%- model_class = User -%>
+  <div class="page-header">
+      <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= fa_icon 'user' %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+    <tr>
+      <td class='col-md-10'><%= user.email %></td>
+      <td>
+        <%= form_for FeedbackRequest.new do |f| %>
+        <%= f.hidden_field :user_id, value: user.id %>
+        <%= f.hidden_field :sender_id, value: current_user.id %>
+        <%= f.hidden_field :prompt, value: "Give me career advice plz" %>
+        <%= f.hidden_field :b_read, value: false %>
+        <%= f.submit "Request Feedback", class: 'btn btn-primary' %>
+        <% end %>
+      </td>
+      <td>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal<%= user.id %>">
+          Give Feedback
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal<%= user.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"><%= user.email %></h4>
+              </div>
+              <div class="modal-body">
+                <%= bootstrap_form_for Feedback.new do |f| %>
+                <%= f.hidden_field :user_id, value: user.id %>
+                <%= f.hidden_field :author_id, value: current_user.id %>
+                <%= f.text_area :positive_content, label: 'What does this person do well?' %>
+                <%= f.text_area :improvement_content, label: 'What could this person improve upon?' %>
+                <%= f.submit "Send Feedback", class: 'btn btn-primary' %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

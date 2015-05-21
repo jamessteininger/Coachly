@@ -1,0 +1,28 @@
+<%- model_class = Feedback -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:user_id) %></th>
+      <th><%= model_class.human_attribute_name(:author_id) %></th>
+      <th><%= model_class.human_attribute_name(:positive_content) %></th>
+      <th><%= model_class.human_attribute_name(:improvement_content) %></th>
+      <th><%= model_class.human_attribute_name(:tags) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @feedbacks.each do |feedback| %>
+      <tr>
+        <td><%= feedback.user_id %></td>
+        <td><%= feedback.author_id %></td>
+        <td><%= feedback.positive_content %></td>
+        <td><%= feedback.improvement_content %></td>
+        <td><%= feedback.tags %></td>
+        <td><%= feedback.created_at %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

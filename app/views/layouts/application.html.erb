@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Coachly</title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <div id="wrapper">
+
+      <!-- Sidebar -->
+      <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+          <li class="sidebar-brand">
+            <a href="#">
+              360Me
+            </a>
+          </li>
+          <li class="<%= 'sidebar-active' if current_page?(feedback_requests_path) %>">
+            <%= link_to feedback_requests_path do %><%= fa_icon 'inbox 2x' %> Requests<% end %>
+          </li>
+          <li class="<%= 'sidebar-active' if current_page?(feedbacks_path) %>">
+            <%= link_to feedbacks_path do %><%= fa_icon 'file-text-o 2x' %> Results<% end %>
+          </li>
+          <li class="<%= 'sidebar-active' if current_page?(users_path) %>">
+            <%= link_to users_path do %><%= fa_icon 'users 2x' %> People<% end %>
+          </li>
+          <li>
+            <%= link_to user_session_path, :method => :delete do %><%= fa_icon 'power-off' %> Log out<% end %>
+          </li>
+        </ul>
+      </div>
+      <!-- /#sidebar-wrapper -->
+
+      <!-- Page Content -->
+      <div id="page-content-wrapper">
+        <div class="container-fluid">
+          <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
+
+          <%= link_to 'Signup', new_user_registration_path %>
+          <%= link_to 'Signin', new_user_session_path %>
+
+          <%= yield %>
+        </div>
+      </div>
+      <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    <!-- Menu Toggle Script -->
+    <script>
+      $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+      });
+    </script>
+  </body>
+</html>

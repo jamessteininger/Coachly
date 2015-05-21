@@ -1,0 +1,52 @@
+<%- model_class = FeedbackRequest -%>
+  <div class="page-header">
+      <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:user_id) %></th>
+      <th><%= model_class.human_attribute_name(:sender_id) %></th>
+      <th><%= model_class.human_attribute_name(:prompt) %></th>
+      <th><%= model_class.human_attribute_name(:b_read) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @feedback_requests.each do |feedback_request| %>
+    <tr>
+      <td><%= feedback_request.user_id %></td>
+      <td><%= feedback_request.sender_id %></td>
+      <td><%= feedback_request.prompt %></td>
+      <td><%= feedback_request.b_read %></td>
+      <td>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal<%= feedback_request.id %>">
+          Give Feedback
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal<%= feedback_request.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"><%= feedback_request.user.email %></h4>
+              </div>
+              <div class="modal-body">
+                <%= bootstrap_form_for Feedback.new do |f| %>
+                <%= f.hidden_field :user_id, value: feedback_request.user_id %>
+                <%= f.hidden_field :author_id, value: current_user.id %>
+                <%= f.text_area :positive_content, label: 'What does this person do well?' %>
+                <%= f.text_area :improvement_content, label: 'What could this person improve upon?' %>
+                <%= f.submit "Send Feedback", class: 'btn btn-primary' %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
