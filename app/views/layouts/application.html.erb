@@ -13,10 +13,13 @@
       <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
           <li class="sidebar-brand">
-            <a href="#"><center>
-             <%= fa_icon 'trophy 2x' %> <br> Coachly
-            </a>
+            <%= link_to root_path do %>
+            <center>
+              <%= fa_icon 'trophy 2x' %> <br> Coachly
+            </center>
+            <% end %>
           </li>
+          <% if user_signed_in? %>
           <li class="<%= 'sidebar-active' if current_page?(feedback_requests_path) %>">
             <%= link_to feedback_requests_path do %><%= fa_icon 'inbox 2x' %> Requests<% end %>
           </li>
@@ -27,33 +30,38 @@
             <%= link_to users_path do %><%= fa_icon 'users 2x' %> People<% end %>
           </li>
           <li>
-            <%= link_to destroy_user_session_path, :method => :delete do %><%= fa_icon 'power-off' %> Log out<% end %>
+            <%= link_to destroy_user_session_path, :method => :delete do %><%= fa_icon 'sign-out 2x' %> Log out <% end %>
+          </li>
+          <% else %>
+          <li>
+            <%= link_to new_user_registration_path do %><%= fa_icon 'pencil 2x' %> Sign Up<% end %>
+          </li>
+          <li>
+            <%= link_to new_user_session_path do %><%= fa_icon 'sign-in 2x' %> Sign In<% end %>
+          </li>
+          <% end %>
           </li>
         </ul>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+      <div class="container-fluid">
+        <a href="#menu-toggle" class="btn btn-default" id="menu-toggle"><%= fa_icon 'bars' %></a>
+        <%= yield %>
       </div>
-      <!-- /#sidebar-wrapper -->
-
-      <!-- Page Content -->
-      <div id="page-content-wrapper">
-        <div class="container-fluid">
-          <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
-
-          <%= link_to 'Signup', new_user_registration_path %>
-          <%= link_to 'Signin', new_user_session_path %>
-
-          <%= yield %>
-        </div>
-      </div>
-      <!-- /#page-content-wrapper -->
+    </div>
+    <!-- /#page-content-wrapper -->
 
     </div>
-    <!-- /#wrapper -->
-    <!-- Menu Toggle Script -->
-    <script>
-      $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-      });
-    </script>
+  <!-- /#wrapper -->
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
   </body>
 </html>
