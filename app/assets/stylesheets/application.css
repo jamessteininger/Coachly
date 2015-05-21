@@ -98,9 +98,10 @@
 }
 
 .sidebar-nav > .sidebar-brand {
-  height: 90px;
+  height: 110px;
   font-size: 22px;
-  line-height: 40px;
+  padding-top: 15px;
+  line-height: 30px;
   background-color: #00B391;
   color: #fff;
 }

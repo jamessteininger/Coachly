@@ -12,7 +12,7 @@ devise_for :users, path: "auth", path_names: { sign_in: 'login', sign_out: 'logo
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'users#index'
+  root 'static_pages#home'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
