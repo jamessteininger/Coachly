@@ -1,26 +1,55 @@
-<%- model_class = Feedback -%>
+<% model_class = Feedback %>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+  <h1>Results</h1>
 </div>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th><%= model_class.human_attribute_name(:author_id) %></th>
-      <th><%= model_class.human_attribute_name(:positive_content) %></th>
-      <th><%= model_class.human_attribute_name(:improvement_content) %></th>
-      <th><%= model_class.human_attribute_name(:tags) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% current_user.feedbacks.each do |feedback| %>
-      <tr>
-        <td><%= feedback.author.email %></td>
-        <td><%= feedback.positive_content %></td>
-        <td><%= feedback.improvement_content %></td>
-        <td><%= feedback.tags %></td>
-        <td><%= feedback.created_at %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="row">
+  <div class="col-md-6">
+    <h2>Received</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th><%= model_class.human_attribute_name(:author_id) %></th>
+          <th>Positive Feedback</th>
+          <th>Needs Improvement</th>
+          <th><%= model_class.human_attribute_name(:created_at) %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% current_user.feedbacks.each do |feedback| %>
+        <tr>
+          <td><%= feedback.author.email %></td>
+          <td><%= feedback.positive_content %></td>
+          <td><%= feedback.improvement_content %></td>
+          <td><%= feedback.tags %></td>
+          <td><%= feedback.created_at %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-6">
+    <h2>Sent</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th><%= model_class.human_attribute_name(:author_id) %></th>
+          <th>Receiver</th>
+          <th>Positive Feedback</th>
+          <th>Needs Improvement</th>
+          <th><%= model_class.human_attribute_name(:created_at) %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% current_user.sent_feedbacks(current_user).each do |feedback| %>
+        <tr>
+          <td><%= feedback.author.email %></td>
+          <td><%= feedback.user.email %></td>
+          <td><%= feedback.positive_content %></td>
+          <td><%= feedback.improvement_content %></td>
+          <td><%= feedback.created_at %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

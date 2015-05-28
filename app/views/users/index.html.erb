@@ -12,6 +12,7 @@
     <% @users.each do |user| %>
     <tr>
       <td class='col-md-10'><%= user.email %></td>
+      <% if user != current_user %>
       <td>
         <%= form_for FeedbackRequest.new do |f| %>
         <%= f.hidden_field :user_id, value: user.id %>
@@ -48,6 +49,7 @@
           </div>
         </div>
       </td>
+        <% end %>
     </tr>
     <% end %>
   </tbody>
